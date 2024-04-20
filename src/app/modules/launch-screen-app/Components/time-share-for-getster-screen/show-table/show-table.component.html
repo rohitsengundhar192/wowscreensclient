@@ -1,0 +1,336 @@
+<div>
+  <div class="mb-2 mt-2" *ngIf="table_view">
+    <div>
+      <p class="normal-heading text-justify">
+        Please select the dates (From and To) in order to view GETster Screens
+        Booking data:
+      </p>
+    </div>
+
+    <form [formGroup]="firstFormGroup3">
+      <div class="w-full gap-4 gt-xs:flex gt-xs:items-center gt-xs:gap-1">
+        <!-- from date -->
+        <div class="mt-2 mb-1 flex space-x-2 gt-sm:flex gt-sm:space-x-5">
+          <p class="primary-heading mt-4">From:</p>
+          <mat-form-field
+            appearance="outline"
+            class="component--mat-form-field__custom-input w-[60%] gt-sm:w-[70%] gt-lg:w-[70%]"
+            (click)="dp.open()"
+          >
+            <mat-label>Choose From Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="dp"
+              formControlName="date1"
+              required
+              readonly
+              (dateChange)="onDateSelected($event)"
+            />
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+            <mat-error
+              *ngIf="
+                firstFormGroup3.get('date2')?.hasError('required') ||
+                firstFormGroup3.get('date2')?.touched
+              "
+            >
+              Date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!--To date-->
+        <div class="mb-2 flex space-x-6 gt-sm:flex mt-[5px] gt-sm:space-x-5">
+          <p class="primary-heading mt-4">To:</p>
+          <mat-form-field
+            appearance="outline"
+            class="component--mat-form-field__custom-input w-[60%] gt-sm:w-[70%] mt-[5px] gt-lg:w-[70%]"
+            (click)="dp1.open()"
+          >
+            <mat-label>Choose To Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="dp1"
+              formControlName="date2"
+              required
+              readonly
+              (dateChange)="onDateSelectedto($event)"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dp1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dp1></mat-datepicker>
+            <mat-error
+              *ngIf="
+                firstFormGroup3.get('date2')?.hasError('required') ||
+                firstFormGroup3.get('date2')?.touched
+              "
+            >
+              Date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- <div class="flex space-x-4 mt-4">
+        <div class="ml-1">
+          <button class="primary-button" mat-raised-button [disabled]="tableform.invalid"
+            (click)="gettableview()">
+            View
+          </button>
+        </div>
+        <div>
+          <button class="primary-button" mat-raised-button (click)="editscreenpopup()" [disabled]="btnDisabled">
+            Edit Booking
+          </button>
+        </div>
+      </div> -->
+    </form>
+
+    <div>
+      <div
+        class="mat-elevation-z8 mt-2 table-responsive w-full gt-xs:w-fit"
+      >
+        <div id="pdfTable">
+          <table
+            id="excel_table1"
+            matSort
+            mat-table
+            #table
+            [dataSource]="dataSource"
+            style="margin-left: auto; margin-right: auto"
+            class="component--mat-table__custom-table checklist-table table-bordered table-sm block"
+          >
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="col1">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  width: 170px;
+                  max-width: 200px;
+                  min-width: 100px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                  border-right: 1px solid #9a9a9a;
+                "
+              >
+                From Date Time
+              </th>
+              <td
+                style="
+                  border-right: 1px solid #9a9a9a;
+                  vertical-align: middle;
+                  padding-left: 6px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <mat-radio-button (click)="enable_edit(element)">
+                  <span class="para-bold">{{
+                    element.start_time | date : "dd MMM y, h:mm a"
+                  }}</span>
+                </mat-radio-button>
+              </td>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container
+              matColumnDef="col2"
+              style="border-right: 1px solid #9a9a9a"
+            >
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  width: 170px;
+                  max-width: 200px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                  border-right: 1px solid #9a9a9a;
+                "
+              >
+                To Date Time
+              </th>
+              <td
+                style="
+                  border-right: 1px solid #9a9a9a;
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <div class="">
+                  <span class="para-bold">{{
+                    element.end_time | date : "dd MMM y, h:mm a"
+                  }}</span>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container
+              matColumnDef="col3"
+              style="border-right: 1px solid #9a9a9a"
+            >
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  width: 100px;
+                  max-width: 150px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                  border-right: 1px solid #9a9a9a;
+                "
+              >
+                GETster Screen ID
+              </th>
+              <td
+                style="
+                  border-right: 1px solid #9a9a9a;
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <div class="">
+                  <span class="para-bold">{{ element.getster_id }}</span>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container
+              matColumnDef="col4"
+              style="border-right: 1px solid #9a9a9a"
+            >
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  width: 150px;
+                  max-width: 200px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                  border-right: 1px solid #9a9a9a;
+                "
+              >
+                Duration (HH:MM)
+              </th>
+              <td
+                style="
+                  border-right: 1px solid #9a9a9a;
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <div class="para-bold">
+                  <span class="para-bold"> {{ element.duration }}</span>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+              style="text-align: center"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="selection.toggle(row); onRowClicked(row)"
+              (mouseover)="row.hovered = true"
+              (mouseout)="row.hovered = false"
+            ></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">Data not Found.</td>
+            </tr>
+          </table>
+        </div>
+
+        <mat-paginator
+          class="component--mat-pagination__size"
+          #paginator
+          #paginatorElement
+          [length]="dataSource.data.length"
+          [pageIndex]="0"
+          [pageSizeOptions]="[5, 10, 20]"
+          [pageSize]="5"
+          [allValue]="paginator.length"
+          appAddAllToPaginator
+          (page)="pageChanged($event)"
+        >
+        </mat-paginator>
+        <span class="red-heading ml-[12px]"> * </span
+          ><span class="para"> Please select All in order to use filter </span>
+          <div class="flex bg-white-black" id="export_btn">
+            <div class="custom-mat-floating-label">
+              <mat-form-field
+                appearance="outline"
+                class="component--mat-form-field__custom-input pl-2"
+              >
+                <input
+                  placeholder="Filter"
+                  [disabled]="
+                    dataSource.data.length === 0 ||
+                    !(pageSize !== 5 && pageSize !== 10 && pageSize !== 20)
+                  "
+                  matInput
+                  (keyup)="applyFilter($event)"
+                  #input
+                />
+              </mat-form-field>
+            </div>
+            <div class="w-full flex justify-end">
+              <span class="p-5 export-btn" [matMenuTriggerFor]="menu"
+                >Export</span
+              >
+            </div>
+          </div>
+      </div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="downloadAsPDF()">
+          <mat-icon>picture_as_pdf</mat-icon>
+          <span>Print / Export PDF</span>
+        </button>
+        <button mat-menu-item (click)="exportReport('sample.xlsx')">
+          <mat-icon>grid_on</mat-icon>
+          <span>Export SpreadSheet</span>
+        </button>
+        <button mat-menu-item (click)="exportReport('sample.csv')">
+          <mat-icon>grid_on</mat-icon>
+          <span>Export csv File</span>
+        </button>
+        <button mat-menu-item (click)="exportReport('sample.json')">
+          <mat-icon>grid_on</mat-icon>
+          <span>Export json</span>
+        </button>
+      </mat-menu>
+      <div class="hide"><p>hide</p></div>
+    </div>
+  </div>
+</div>

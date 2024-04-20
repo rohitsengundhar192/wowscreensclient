@@ -1,0 +1,79 @@
+1)
+create table IF NOT EXISTS global_getster_screens_db.getster_screen_payment_details(
+getster_screen_payment_details_id 	integer primary key auto_increment,
+	customer_country_code 	varchar(3) 	,
+	customer_id 	integer 	,
+	customer_type 	tinyint 	,
+	is_paid_from_wow_wallet 	boolean,
+	wallet_transaction_id 	integer
+);
+
+2)
+create table IF NOT EXISTS global_getster_screens_db.getster_screen_usage_validity_history(
+id int primary key auto_increment,
+usage_validity_update_datetime 	datetime ,
+	getster_screen_id 	int 	,
+	purchase_rental_type 	tinyint 	,
+	purchase_rental_valid_until_utc_datetime 	datetime ,
+	usage_status 	tinyint 	,
+	usage_blocked_by_getster_id 	integer ,
+	getster_screen_payment_transaction_details_id 	integer
+);
+
+
+3) create table IF NOT EXISTS in_6_edu_customer_db.audit_trail_for_access_control_of_getster_screen(
+id int primary key auto_increment,
+entry_by_user_id integer,
+entry_type varchar(100),
+entry_datetime datetime
+);
+
+4)
+create table IF NOT EXISTS in_33_edu_customer_db.25_getster_screen_access_control_user_category_ids(
+id int primary key auto_increment,
+permitted_by_user_category_id integer
+);
+
+
+5)
+
+create table IF NOT EXISTS in_33_edu_customer_db.getster_exclusive_partner_agreement_details(
+id int primary key auto_increment,
+agreement_signature_datetime 	datetime ,
+	signature_by_user_id 	integer 	,
+	getster_exclusive_partner_agreement_valid_until 	datetime ,
+	is_renewal_of_previous_agreement 	boolean ,
+	cloud_file_id 	integer 	,
+	is_sign_up_bonus_getster_screen_rental_waiver_availed_datetime 	datetime ,
+	sign_up_bonus_provided_by_getster_id 	integer
+);
+
+
+6) create table IF NOT EXISTS in_33_edu_customer_db.25_rental_waiver_claim_data(
+id int primary key auto_increment,
+ 	rental_waiver_claim_datetime 	datetime ,
+	rental_waiver_claimed_for_getster_screen_id 	integer ,
+	rental_waiver_claim_duration_in_months 	integer ,
+	claimed_for_collection_qty 	integer
+);
+
+7)  create table IF NOT EXISTS in_33_edu_customer_db.25_audit_trail_for_access_control_for_wow_screens(
+id int primary key auto_increment,
+entry_by_user_id integer,
+entry_type varchar(100),
+entry_datetime datetime
+);
+
+8) create table IF NOT EXISTS in_33_edu_customer_db.25_audit_trail_for_claim_rental_wavier_rent_paid(
+id int primary key auto_increment,
+entry_by_user_id integer,
+entry_type varchar(100),
+entry_datetime datetime
+);
+
+9) create table IF NOT EXISTS in_33_edu_customer_db.25_audit_trail_for_timeshare_for_getster_screen(
+id int primary key auto_increment,
+entry_by_user_id integer,
+entry_type varchar(100),
+entry_datetime datetime
+);

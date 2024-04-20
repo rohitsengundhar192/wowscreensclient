@@ -1,0 +1,59 @@
+<div>
+  <mat-toolbar class="component--dialog-box__custom-toolbar">
+    <span class="font-small-in-size">Purchase</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="flex items-center justify-center">
+      <mat-icon (click)="onNoClick()">close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<div class="p-2">
+  <!--Simple text-->
+  <div class="text-justify">
+    <span class="normal-heading">Step 1:</span>
+    <span class="primary-heading ml-[5px]"
+      >Scan to the GETster Screen ID from the INFO section of the Screen
+    </span>
+  </div>
+
+  <!--Scanner-->
+
+  <div class="h-[200px] w-200px flex justify-center items-center mt-[30px]">
+    <div class="h-[250px] w-[400px] camera-color text-center flex">
+      <div
+        class="w-full my-auto items-center"
+        *ngIf="allow_access_camera"
+        (click)="display_camera()"
+      >
+        Allow access to the camera to enable QR Code Scanning
+      </div>
+      <div
+        class="h-[250px] w-[400px]"
+        *ngIf="!allow_access_camera"
+        (click)="handle(action, 'stop'); display_camera(); closeDialog()"
+      >
+        <ngx-scanner-qrcode
+          [isAuto]="true"
+          #action="scanner"
+          (error)="onError($event)"
+          (event)="onEvent($event)"
+        >
+        </ngx-scanner-qrcode>
+      </div>
+    </div>
+  </div>
+
+  <!--scanner down text-->
+  <div class="text-justify mt-[32px]">
+    <span class="para-bold whitespace-nowrap">Click the</span>
+    <span class="ml-[5px] mr-[5px]"
+      ><mat-icon style="vertical-align: middle; color: red"
+        >info</mat-icon
+      ></span
+    >
+    <span class="para-bold"
+      >button on the top right corner of the span GETster Screen</span
+    >
+  </div>
+</div>

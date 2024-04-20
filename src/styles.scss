@@ -1,0 +1,159 @@
+@use "@angular/material" as mat;
+
+@use "./styles/themes/light";
+@use "./styles/components";
+@use "./styles/typography/config" as typography;
+
+@include mat.core(typography.$my-app-typography);
+
+@include mat.core-theme(light.$my-app-light-theme);
+@include mat.button-theme(light.$my-app-light-theme);
+@include components.theme(light.$my-app-light-theme,
+  typography.$my-app-typography,
+  light.$my-app-light-variants);
+
+
+
+  @import "global";
+  @import "variables";
+  @import "component-global";
+
+  // @import "tailwindcss/base";
+  // @import "tailwindcss/components";
+  @import "tailwindcss/utilities";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* You can add global styles to this file, and also import other style files */
+.Wrapper {
+  margin-bottom: 2rem;
+}
+
+.ViewContainer {
+  list-style: none;
+  -ms-box-orient: horizontal;
+  display: flex;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+
+  button {
+      margin-right: 10px;
+  }
+}
+
+.Button {
+  background-color: #e7e7e7;
+  color: black;
+  border: none;
+  padding: 7px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+}
+
+.Switch {
+  margin: 4px 15px;
+  font-size: 14px;
+  font-family: "Arial, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Switch_Toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  margin-right: 5px;
+}
+
+.Switch_Toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.Slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.Slider:before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 21px;
+  left: 6px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .Slider {
+  background-color: #2196f3;
+}
+
+input:focus + .Slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .Slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.mat-tree-node {
+  height: 39px;
+  min-height: 39px;
+  border-bottom: 1px solid #ebeff2;
+  color: black;
+
+  .mdc-icon-button {
+      width: 30px !important;
+      height: 48px !important;
+      padding: 12px 0px !important;
+
+      &.menu-btn {
+          margin-right: 7px;
+      }
+
+      .mat-mdc-button-touch-target {
+          width: 30px !important;
+      }
+  }
+}
+
+
+.horizontalContainer {
+  min-height: 60px;
+}
+
+@import './components/calendar/calendar.module.scss';
+@import './components/gantt/gantt.module.scss';
+@import './components/grid/grid.module.scss';
+@import './components/other/tooltip.module.scss';
+@import './components/task-item/task-list.module.scss';
+@import './components/task-item/bar/bar.module.scss';
+@import './components/task-item/milestone/milestone.module.scss';
+@import './components/task-item/project/project.module.scss';

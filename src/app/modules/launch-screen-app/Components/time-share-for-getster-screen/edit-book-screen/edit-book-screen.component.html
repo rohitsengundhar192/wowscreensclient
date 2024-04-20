@@ -1,0 +1,312 @@
+<div>
+  <mat-toolbar class="component--dialog-box__custom-toolbar">
+    <span class="font-small-in-size ml-[-4px]">Edit Bookings</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="flex items-center justify-center">
+      <mat-icon (click)="onNoClick()">close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<div class="p-2 dialog-container">
+  <div class="dialog-content">
+    <form [formGroup]="firstFormGroup3">
+      <div>
+        <p class="normal-heading text-justify">
+          Please select the date and time of your GETster Screen Booking:
+        </p>
+      </div>
+
+      <!--Date picker-->
+      <div class="w-full gt-xs:flex gap-2 items-center">
+        <div>
+          <span class="primary-heading">Select Date:</span>
+        </div>
+        <div>
+          <mat-form-field
+            appearance="outline"
+            class="component--mat-form-field__custom-input w-full"
+          >
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Choose a date"
+              min="{{ today | date : 'yyyy-MM-dd' }}"
+              [(ngModel)]="selectedDate"
+              (ngModelChange)="onDateChange($event)"
+              formControlName="selectdate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex gt-xs: gap-3">
+          <div class="">
+            <div class="">
+              <span class="primary-heading">Select From Time:</span>
+            </div>
+            <div class="ml-[10px]">
+              <ngx-mat-timepicker
+                [(ngModel)]="start_date"
+                [disabled]="disabled"
+                [showSpinners]="showSpinners"
+                [stepHour]="stepHour"
+                [stepMinute]="stepMinute"
+                [stepSecond]="stepSecond"
+                [showSeconds]="showSeconds"
+                [enableMeridian]="enableMeridian"
+                formControlName="starttime"
+                (ngModelChange)="from_time($event)"
+              >
+              </ngx-mat-timepicker>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <span class="primary-heading">Select To Time:</span>
+            </div>
+            <div class="ml-[10px]">
+              <ngx-mat-timepicker
+                [(ngModel)]="end_date"
+                [disabled]="disabled"
+                [showSpinners]="showSpinners"
+                [stepHour]="stepHour"
+                [stepMinute]="stepMinute"
+                [stepSecond]="stepSecond"
+                [showSeconds]="showSeconds"
+                [enableMeridian]="enableMeridian"
+                formControlName="endtime"
+                (ngModelChange)="to_time($event)"
+              >
+              </ngx-mat-timepicker>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-[5px]">
+        <button
+          class="primary-button"
+          mat-raised-button
+          [disabled]="bookeditform.invalid"
+          (click)="checkavailability()"
+          [disabled]="isDisabled_save_btn"
+        >
+          Check Availability
+        </button>
+      </div>
+
+      <hr class="h-1 mt-2 bg-secondary" />
+
+      <div class="mt-2" *ngIf="truediv">
+        <div>
+          <p class="primary-heading text-justify">
+            Select from the following Screens the are available during the above
+            booking and click the “Book GETster Screen” Button
+          </p>
+        </div>
+
+        <div>
+          <div class="mat-elevation-z8 mt-2 table-responsive w-fit">
+            <div id="bookScreenTable">
+              <table
+                id="excel_table"
+                matSort
+                mat-table
+                #table
+                [dataSource]="dataSource"
+                style="margin-left: auto; margin-right: auto"
+                class="component--mat-table__custom-table checklist-table table-bordered table-sm block"
+              >
+                <!-- WOW Screen ID Column -->
+                <ng-container matColumnDef="screenid">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    style="
+                      min-width: 165px;
+                      word-wrap: break-word;
+                      white-space: nowrap;
+                      padding-left: 8px;
+                      padding-right: 8px;
+                      vertical-align: middle;
+                      text-align: center;
+                    "
+                  >
+                    WOW <br />
+                    Screen ID
+                  </th>
+                  <td
+                    style="
+                      vertical-align: middle;
+                      padding-left: 8px;
+                      text-align: left;
+                    "
+                    mat-cell
+                    *matCellDef="let element"
+                  >
+                    <mat-radio-group formControlName="setradio">
+                      <mat-radio-button
+                        (click)="selectscreen(element)"
+                        [value]="element.getster_screen_id"
+                        >{{ element.getster_screen_id }}</mat-radio-button
+                      >
+                    </mat-radio-group>
+                  </td>
+                </ng-container>
+
+                <!-- Screen Size (inch) Column -->
+                <ng-container matColumnDef="screeninch">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    style="
+                      min-width: 160px;
+                      word-wrap: break-word;
+                      white-space: nowrap;
+                      padding-left: 8px;
+                      padding-right: 8px;
+                      vertical-align: middle;
+                      text-align: center;
+                    "
+                  >
+                    Screen <br />
+                    Size (inch)
+                  </th>
+                  <td
+                    style="
+                      vertical-align: middle;
+                      padding-left: 8px;
+                      text-align: left;
+                    "
+                    mat-cell
+                    *matCellDef="let element"
+                  >
+                    {{ element.screen_size_in_inch }}
+                  </td>
+                </ng-container>
+
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="displayedColumns; sticky: true"
+                  style="text-align: center"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                  (click)="selection.toggle(row); onRowClicked(row)"
+                  (mouseover)="row.hovered = true"
+                  (mouseout)="row.hovered = false"
+                ></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="7">
+                    Data not Found.
+                    <!-- "{{ input.value }}" -->
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div>
+              <mat-paginator
+                class="component--mat-pagination__size"
+                #paginator
+                #paginatorElement
+                [length]="dataSource.data.length"
+                [pageIndex]="0"
+                [pageSizeOptions]="[5, 10, 20]"
+                [pageSize]="5"
+                [allValue]="paginator.length"
+                appAddAllToPaginator
+                (page)="pageChanged($event)"
+              >
+              </mat-paginator>
+            </div>
+
+            <span class="red-heading ml-[12px]"> * </span
+            ><span class="para">
+              Please select All in order to use filter
+            </span>
+            <div class="flex bg-white-black" id="export_btn">
+              <div class="custom-mat-floating-label">
+                <mat-form-field
+                  appearance="outline"
+                  class="component--mat-form-field__custom-input pl-2"
+                >
+                  <input
+                    placeholder="Filter"
+                    [disabled]="
+                      dataSource.data.length === 0 ||
+                      !(pageSize !== 5 && pageSize !== 10 && pageSize !== 20)
+                    "
+                    matInput
+                    (keyup)="applyFilter($event)"
+                    #input
+                  />
+                </mat-form-field>
+              </div>
+              <div class="w-full flex justify-end">
+                <span class="p-5 export-btn" [matMenuTriggerFor]="menu"
+                  >Export</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Mat Menu -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="downloadAsPDF()">
+            <mat-icon>picture_as_pdf</mat-icon>
+            <span>Print / Export PDF</span>
+          </button>
+          <button mat-menu-item (click)="exportReport('sample.xlsx')">
+            <mat-icon>grid_on</mat-icon>
+            <span>Export SpreadSheet</span>
+          </button>
+          <button mat-menu-item (click)="exportReport('sample.csv')">
+            <mat-icon>grid_on</mat-icon>
+            <span>Export csv File</span>
+          </button>
+          <button mat-menu-item (click)="exportReport('sample.json')">
+            <mat-icon>grid_on</mat-icon>
+            <span>Export json</span>
+          </button>
+        </mat-menu>
+        <br />
+      </div>
+
+      <div class="mt-2" *ngIf="falsediv">
+        <p class="normal-heading text-justify" style="color: #ff0404">
+          There are NO Screens available during the above Booking Period. Please
+          change the booking period and check availability.
+        </p>
+      </div>
+    </form>
+    <div *ngIf="truediv">
+      <button
+        class="primary-button float-right xs:text-[12px]"
+        mat-raised-button
+        [disabled]="btnDisabled"
+        (click)="editscreen()"
+      >
+        Update GETster Screen
+      </button>
+    </div>
+  </div>
+
+  <!-- <div class="button-container" *ngIf="truediv">
+    <button
+      class="primary-button xs:text-[12px] floating-button"
+      mat-raised-button
+      [disabled]="btnDisabled"
+      (click)="editscreen()"
+    >
+      Update GETster Screen
+    </button>
+  </div> -->
+</div>

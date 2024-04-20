@@ -1,0 +1,53 @@
+<div>
+  <mat-toolbar class="component--dialog-box__custom-toolbar">
+    <span class="font-small-in-size">Report Issue</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="flex items-center justify-center">
+      <mat-icon (click)="onNoClick()">close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<form [formGroup]="reportform">
+  <div>
+
+    <div>
+      <p class="primary-heading text-justify mt-1 ml-1 gt-sm:ml-2 gt-md:ml-4">
+        GETster Screen ID:
+        <span class="normal-heading ml-1">{{ getster_screen_id }}</span>
+      </p>
+    </div>
+
+    <div>
+      <p
+        class="normal-heading text-justify ml-1 gt-sm:ml-2 pr-1 gt-sm:pr-2 gt-md:ml-4 gt-md:pr-4"
+      >
+      Issue Reported Details:
+      </p>
+    </div>
+
+    <div>
+      <mat-form-field
+        appearance="outline"
+        class="component-date-picker__reduced-space ml-1 gt-sm:ml-2 gt-md:ml-4 w-[94%]"
+      >
+        <textarea
+          matInput
+          formControlName="issuedetail"
+          [value]="issuedetail"
+          readonly
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <p
+        class="normal-heading -mt-5 mb-1 text-justify ml-1 gt-sm:ml-2 pr-1 gt-sm:pr-2 gt-md:ml-4 gt-md:pr-4"
+      >
+        In case of Emergency, Pl Contact your GETster Coordinator:
+        <span class="primary-heading"
+          >+{{ mobile_extension }} {{ mobile }}</span
+        >
+      </p>
+    </div>
+  </div>
+</form>

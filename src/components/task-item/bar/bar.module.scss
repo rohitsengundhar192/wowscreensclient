@@ -1,0 +1,31 @@
+.barWrapper {
+  cursor: pointer;
+  outline: none;
+}
+
+.barWrapper:hover .barHandle,
+.barWrapper.selected .barHandle {
+  visibility: visible;
+  opacity: 1;
+}
+
+.barHandle {
+  fill: #ddd;
+  cursor: ew-resize;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.barBackground {
+  user-select: none;
+  stroke-width: 0;
+}
+.barWrapper {
+  /* Your existing styles */
+  /* ... */
+  transition: transform 0.5s ease; /* Add a CSS transition */
+}
+
+.barWrapper.flying {
+  transform: translateY(-10px); /* Adjust the translation distance as needed */
+}

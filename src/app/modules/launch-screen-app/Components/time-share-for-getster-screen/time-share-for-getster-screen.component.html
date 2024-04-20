@@ -1,0 +1,62 @@
+<div>
+  <div class="w-full gt-xs:flex items-center gap-2">
+    <!--simple text-->
+    <div>
+      <span class="normal-heading"
+        >Time Share Schedule of your GETster Screens:</span
+      >
+    </div>
+
+    <!--select-->
+    <div class="xs:mb-[15px] gt-xs:w-[28%]">
+      <mat-form-field appearance="outline" class="w-full component--mat-form-field__custom-input">
+        <mat-select [(ngModel)]="selectedFood" (ngModelChange)="onFoodSelectionChange()">
+          <mat-option *ngFor="let food of foods" [value]="food.value">
+            {{ food.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!--Buttons and mat-select-->
+  <div class="gt-xs:flex items-center gap-2" *ngIf="selectedFood !== '1'">
+    <!--buttons-->
+    <div class=" flex items-center gap-2">
+      <div>
+        <button
+          class="primary-button"
+          (click)="openbookscreen()"
+          mat-raised-button
+        >
+          Book Screen Time
+        </button>
+      </div>
+
+      <div>
+        <button
+          class="primary-button"
+          (click)="openeditbookscreen()"
+          mat-raised-button
+          [disabled]="btnDisabled"
+        >
+          Edit Booking
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--content-->
+  <!--For calander-->
+  <div *ngIf="selectedFood === '0'">
+    <div class="mt-[10px]">
+      <app-gantt-integration [tasks]="tasks"></app-gantt-integration>
+    </div>
+  </div>
+
+  <!-- For Table -->
+  <div *ngIf="selectedFood === '1'">
+    <app-table-only></app-table-only>
+    <!-- <app-testing-timeshare></app-testing-timeshare> -->
+  </div>
+</div>

@@ -1,0 +1,30 @@
+
+<div class="p-2 space-y-2">
+  <!--simple text-->
+  <div class="w-full flex items-center justify-center">
+    <span class="secondary-heading"
+      >I agree to have received the GETster Screen with ID: in working condition
+      without any damages.</span
+    >
+    <!-- <span class="primary-heading ml-[5px]">54353</span> -->
+  </div>
+
+  <!--button-->
+  <div class="w-full flex items-center justify-center text-justify">
+    <button class="primary-button"  [disabled]="btndisable" mat-raised-button (click)="generateRandomNumber()">
+      Generate POD Number
+    </button>
+  </div>
+
+
+  <!--pod number-->
+  <div class="w-full flex justify-center text-justify">
+    <span class="para-bold">POD Number is: </span>
+    <span *ngIf="randomNumber !== null" class="red-heading ml-[3px]">{{
+      randomNumber
+    }}</span>
+  </div>
+</div>
+
+
+<!-- {{display}} -->

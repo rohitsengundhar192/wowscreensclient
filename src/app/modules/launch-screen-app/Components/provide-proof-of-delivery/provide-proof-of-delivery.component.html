@@ -1,0 +1,108 @@
+<ng-container *ngIf="!hidecontent">
+  <!--First-->
+  <div class="p-2" *ngIf="showfirst">
+    <!--Simple text-->
+    <div class="w-full flex justify-center text-justify">
+      <!-- <span class="normal-heading whitespace-nowrap">Step 1:</span> -->
+      <span class="primary-heading ml-[5px]"
+        >Scan to the GETster Screen ID from the INFO section of the Screen
+      </span>
+    </div>
+
+    <!--Scanner-->
+
+    <div class="h-[200px] w-200px flex justify-center items-center mt-[30px]">
+      <div class="h-[250px] w-[400px] camera-color text-center flex">
+        <div
+          class="w-full my-auto items-center"
+          *ngIf="allow_access_camera"
+          (click)="display_camera()"
+        >
+          Allow access to the camera to enable QR Code Scanning
+        </div>
+        <div
+          class="h-[250px] w-[400px]"
+          *ngIf="!allow_access_camera"
+          (click)="handle(action, 'stop'); display_camera()"
+        >
+          <ngx-scanner-qrcode
+            [isAuto]="true"
+            #action="scanner"
+            (error)="onError($event)"
+            (event)="onEvent($event)"
+          >
+          </ngx-scanner-qrcode>
+        </div>
+      </div>
+    </div>
+
+    <!--scanner down text-->
+    <div class="text-justify w-full flex justify-center mt-[32px]">
+      <span class="para-bold whitespace-nowrap">Click the</span>
+      <span class="ml-[5px] mr-[5px] mt-[-4px]"
+        ><mat-icon
+          style="vertical-align: middle; color: red; font-style: italic"
+          >info</mat-icon
+        >
+      </span>
+      <span class="para-bold"
+        >button on the top right corner of the span GETster Screen</span
+      >
+    </div>
+  </div>
+
+  <!--Second-->
+  <div class="p-2 space-y-2" *ngIf="showsecond">
+    <!--simple text-->
+
+    <div class="text-center">
+      <div>
+        <span span class="secondary-heading">I agree to have received the</span>
+      </div>
+      <div>
+        <span span class="secondary-heading">GETster Screen with ID:</span
+        ><span class="primary-heading ml-[5px]">{{ scanData }}</span>
+      </div>
+
+      <div>
+        <span span class="secondary-heading"
+          >in working condition without any damages.</span
+        >
+      </div>
+    </div>
+
+    <!--button-->
+    <div class="w-full flex items-center justify-center text-justify">
+      <button
+        class="primary-button"
+        mat-raised-button
+        [disabled]="btndisable"
+        (click)="generateRandomNumber()"
+      >
+        Generate POD Number
+      </button>
+    </div>
+
+    <div class="w-full flex justify-center text-justify gap-2">
+      <div>
+        <span>
+            <span class="secondary-heading">you can generate another pod after 1 min:-</span>
+        </span>
+      </div>
+
+      <div>
+      <span class="red-heading">
+        {{display}}
+      </span> 
+      </div>
+    </div>
+
+    <!--pod number-->
+    <div class="w-full flex justify-center text-justify">
+      <span class="para-bold">POD Number is: </span>
+      <span *ngIf="randomNumber !== null" class="red-heading ml-[3px]">{{
+        randomNumber
+      }}</span>
+    </div>
+  </div>
+</ng-container>

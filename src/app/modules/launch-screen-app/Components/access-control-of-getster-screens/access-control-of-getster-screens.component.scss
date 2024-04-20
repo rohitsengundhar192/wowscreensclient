@@ -1,0 +1,102 @@
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.txtColor:hover {
+  color: red;
+  cursor: pointer;
+}
+
+// .mat-tree-position {
+//   position: fixed;
+//   top: 10%;
+// }
+
+// mat-tree-node {
+//   background-color: unset;
+// }
+
+// mat-tree {
+//   background: unset;
+// }
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 10px;
+  list-style-type: none;
+}
+
+.txtColor:hover {
+  color: #ffff00;
+  cursor: pointer;
+}
+
+mat-tree > mat-nested-tree-node > li > div.mat-tree-node {
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  &::before {
+    border: none;
+  }
+}
+
+mat-tree li.mat-tree-node,
+mat-tree div.mat-tree-node {
+  position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+    border: 1px dotted lightgray;
+    position: absolute;
+    height: 40px;
+    left: -20px;
+    border-width: 0 0 1px 1px;
+    width: 24px;
+    bottom: 24px;
+  }
+}
+
+mat-tree mat-tree-node:first-child li.mat-tree-node::before,
+mat-tree mat-nested-tree-node:first-child > li > div.mat-tree-node::before {
+  height: 24px;
+}
+
+mat-tree mat-nested-tree-node:not(:last-child) > li > ul {
+  position: relative;
+  &::before {
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    left: -20px;
+    bottom: 24px;
+    content: "";
+    border-left: 1px dotted lightgrey;
+  }
+}
+
+.mat-tree-node {
+  &:hover {
+    background-color: #d6d6d6 !important;
+  }
+}
+.bg {
+  border: grey 1px solid;
+  box-shadow: 0 0 7px grey; /* Adjust the shadow values as needed */
+}
+
+
+
+.mat-tree-node {
+  height: 30px;
+  min-height: 30px;
+  border-bottom: 1px solid #ebeff2;
+  color: black;
+}

@@ -1,0 +1,458 @@
+<ng-container *ngIf="showdate == 1">
+  <div>
+    <div>
+      <p class="normal-heading">
+        List of GETster Screens registered in your Educational Institution:<span
+          class="ml-2"
+          style="color: #ff0404"
+          >{{ registered_educational_institution_name }}</span
+        >
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 gt-sm:flex gt-sm:space-x-0">
+      <button
+        class="primary-button"
+        mat-raised-button
+
+        (click)="paywowrental()"
+
+      >
+      Extend Rental
+      </button>
+
+      <button
+        class="primary-button"
+        mat-raised-button
+        [disabled]="btndisable "
+        *ngIf="usagestatustype != 2"
+        (click)="reportissue()"
+
+      >
+        <span> Report Issue </span>
+      </button>
+
+      <button
+        class="primary-button"
+        mat-raised-button
+        [disabled]="btndisable"
+        *ngIf="usagestatustype == 2"
+        (click)="viewissue()"
+      >
+        <span> View - Report Issue </span>
+      </button>
+      <!-- [disabled]="btnDisabled" -->
+      <button
+        class="primary-button"
+
+        mat-raised-button
+        (click)="booknewscreen()"
+      >
+        Rent New Screen
+      </button>
+      <button
+        class="primary-button"
+        mat-raised-button
+        (click)="booknewscreen()"
+
+      >
+        Purchase New Screen
+      </button>
+    </div>
+    <!--Table-->
+    <div>
+      <div
+        class="mat-elevation-z8 mt-3 table-responsive gt-md:w-[65%] gt-lg:w-fit w-full"
+      >
+        <div id="screenRegisterTable_1">
+          <table
+            id="excel_table"
+            matSort
+            mat-table
+            #table
+            [dataSource]="dataSource"
+            style="margin-left: auto; margin-right: auto"
+            class="component--mat-table__custom-table checklist-table table-bordered table-sm block"
+          >
+            <!-- Screen ID Column -->
+            <ng-container matColumnDef="screenid">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 120px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+                GETster <br />
+                Screen ID
+              </th>
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <mat-radio-group [(ngModel)]="screenradio">
+                  <mat-radio-button
+                    [value]="element.screenid"
+                    (click)="getusagedata(element.screenid, element.screeninch)"
+                    (click)="disable(element)"
+                  >
+                    <span class="para-bold">{{
+                      element.screenid
+                    }}</span></mat-radio-button
+                  >
+                </mat-radio-group>
+              </td>
+            </ng-container>
+
+            <!-- Screen Inch Column -->
+            <ng-container matColumnDef="screeninch">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 120px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+                Screen <br />
+                Size (inch)
+              </th>
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <span class="para-bold">{{ element.screeninch }}</span>
+              </td>
+            </ng-container>
+
+            <!-- Mounting Type Column -->
+            <ng-container matColumnDef="mountingtype">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 150px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+                Mounting <br />
+                Type
+              </th>
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <span class="para-bold"> {{ element.mountingtype }}</span>
+              </td>
+            </ng-container>
+
+            <!-- Usege Status Column -->
+            <ng-container matColumnDef="usagestatus" style="">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 160px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+
+                Status
+              </th>
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <span class="para-bold">{{ element.usagestatus }}</span>
+              </td>
+            </ng-container>
+
+            <!-- Rental Column -->
+            <ng-container matColumnDef="rentaldate" style="">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 110px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+                Rental / Usage <br />
+                Valid <br />
+                Upto (date)
+              </th>
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <span class="para-bold">{{
+                  element.rentaldate | date : "dd MMM y"
+                }}</span>
+              </td>
+            </ng-container>
+
+            <!-- Screen Rental Yes/No Column -->
+            <ng-container matColumnDef="waivedoff" style="">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 180px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+                Purchase / <br />
+                Rental Type
+              </th>
+
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <span class="para-bold">{{ element.waivedoff }}</span>
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+              style="text-align: center"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="selection.toggle(row); onRowClicked(row)"
+              (mouseover)="row.hovered = true"
+              (mouseout)="row.hovered = false"
+            ></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="7">
+                Data not Found.
+                <!-- "{{ input.value }}" -->
+              </td>
+            </tr>
+          </table>
+        </div>
+        <mat-paginator
+          class="component--mat-pagination__size"
+          #paginator
+          #paginatorElement
+          [length]="dataSource.data.length"
+          [pageIndex]="0"
+          [pageSizeOptions]="[5, 10, 20]"
+          [pageSize]="5"
+          [allValue]="dataSource.data.length"
+          appAddAllToPaginator
+          (page)="pageChanged($event)"
+        >
+        </mat-paginator>
+        <span class="red-heading ml-[12px]"> * </span
+          ><span class="para"> Please select All in order to use filter </span>
+          <div class="flex bg-white-black" id="export_btn">
+            <div class="custom-mat-floating-label">
+              <mat-form-field
+                appearance="outline"
+                class="component--mat-form-field__custom-input pl-2"
+              >
+                <input
+                  placeholder="Filter"
+                  [disabled]="
+                    dataSource.data.length === 0 ||
+                    !(pageSize !== 5 && pageSize !== 10 && pageSize !== 20)
+                  "
+                  matInput
+                  (keyup)="applyFilter($event)"
+                  #input
+                />
+              </mat-form-field>
+            </div>
+            <div class="w-full flex justify-end">
+              <span class="p-5 export-btn" [matMenuTriggerFor]="menu"
+                >Export</span
+              >
+            </div>
+          </div>
+
+      </div>
+    </div>
+    <!-- Mat Menu -->
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="downloadAsPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        <span>Print / Export PDF</span>
+      </button>
+      <button mat-menu-item (click)="exportReport('sample.xlsx')">
+        <mat-icon>grid_on</mat-icon>
+        <span>Export SpreadSheet</span>
+      </button>
+      <button mat-menu-item (click)="exportReport('sample.csv')">
+        <mat-icon>grid_on</mat-icon>
+        <span>Export csv File</span>
+      </button>
+      <button mat-menu-item (click)="exportReport('sample.json')">
+        <mat-icon>grid_on</mat-icon>
+        <span>Export json</span>
+      </button>
+    </mat-menu>
+
+    <div class="mt-4">
+      <div>
+        <app-rental-wavier-details></app-rental-wavier-details>
+      </div>
+    </div>
+    <!--Rental Details-->
+    <div class="mt-4">
+      <div>
+        <p class="normal-heading" style="color: #ff0404">
+          GETster Screen Rental Charges:
+        </p>
+      </div>
+      <div>
+        <app-rental-details></app-rental-details>
+      </div>
+    </div>
+    <!--Selling price details-->
+
+    <div class="mt-4">
+      <div>
+        <p class="normal-heading" style="color: #ff0404">
+          GETster Screen Selling Price Charges:
+        </p>
+      </div>
+      <div>
+        <!-- <app-table4-screens-management></app-table4-screens-management> -->
+        <app-selling-details></app-selling-details>
+      </div>
+    </div>
+  </div>
+
+  <!--terms and consitons-->
+  <!-- ckeditor  -->
+  <!-- <div class="mt-2">
+    <ckeditor name="myckeditors" formControlName="cdk_editor"> </ckeditor>
+  </div> -->
+
+  <!--Table 3-->
+  <form [formGroup]="firstFormGroup">
+    <div *ngIf="div" class="text-[14px] mt-4 text-justify">
+      <p class="normal-heading" style="color: #ff0404">
+        GETster Screen Rental Waiver - Terms and Conditions:
+      </p>
+      <div class="mt-2">
+        <ckeditor
+          name="myckeditors"
+          [config]="ckeConfig"
+          formControlName="cdk_editor_2"
+          [readonly]="readonlydata"
+        >
+        </ckeditor>
+      </div>
+    </div>
+
+    <div *ngIf="div" class="text-[14px] mt-4 text-justify">
+      <p class="normal-heading" style="color: #ff0404">
+        GETster Screen - Rental Terms & Conditions:
+      </p>
+      <div class="mt-2">
+        <ckeditor
+          name="myckeditors"
+          [config]="ckeConfig"
+          formControlName="cdk_editor_1"
+          [readonly]="readonlydata"
+        >
+        </ckeditor>
+      </div>
+      <!-- <div class="mt-2">
+        <ckeditor
+          name="myckeditors"
+          [config]="ckeConfig"
+          formControlName="cdk_editor_1"
+          #editorRef
+        >
+        </ckeditor>
+      </div> -->
+    </div>
+
+    <!--Table 4-->
+
+    <div *ngIf="div" class="text-[14px] mt-4 text-justify">
+      <!-- ckeditor  -->
+      <p class="normal-heading" style="color: #ff0404">
+        GETster Screen Sales - Terms and Conditions:
+      </p>
+      <div class="mt-2">
+        <ckeditor
+          name="myckeditors"
+          [config]="ckeConfig"
+          formControlName="cdk_editor"
+          [readonly]="readonlydata"
+        >
+        </ckeditor>
+      </div>
+    </div>
+  </form>
+</ng-container>
+
+<ng-container *ngIf="showdate == 2"> </ng-container>

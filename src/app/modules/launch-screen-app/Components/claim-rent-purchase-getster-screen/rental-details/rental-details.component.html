@@ -1,0 +1,280 @@
+<div>
+  <div class="mat-elevation-z8 mt-2 table-responsive gt-sm:w-fit w-full">
+    <div id="rentaldetails">
+      <table
+        id="excel_table"
+        matSort
+        mat-table
+        #table
+        [dataSource]="dataSource"
+        style="margin-left: auto; margin-right: auto"
+        class="component--mat-table__custom-table checklist-table table-bordered table-sm block"
+      >
+        <!-- Screen Size Column -->
+        <ng-container matColumnDef="screeninch">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="
+              min-width: 100px;
+              word-wrap: break-word;
+              white-space: nowrap;
+              padding-left: 8px;
+              padding-right: 8px;
+              vertical-align: middle;
+              text-align: center;
+            "
+          >
+            Screen <br />
+            Size (inch)
+          </th>
+          <td
+            style="vertical-align: middle; padding-left: 8px; text-align: left"
+            mat-cell
+            *matCellDef="let element"
+          >
+            <!-- <mat-radio-group [(ngModel)]="rentalradio">
+              <mat-radio-button [value]="element.screeninch" (click)="gettermsandcondition(element.screeninch)"></mat-radio-button>
+            </mat-radio-group> -->
+            <span class="para-bold">{{ element.screeninch }}</span>
+          </td>
+        </ng-container>
+
+        <!-- WOW Rental Paid two months -->
+        <ng-container matColumnDef="twomonths1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [attr.colspan]="1"
+            style="
+              min-width: 120px;
+              word-wrap: break-word;
+              white-space: nowrap;
+              padding-left: 8px;
+              padding-right: 8px;
+              vertical-align: middle;
+              text-align: center;
+            "
+          >
+            Paid for <br />
+            Two Months
+          </th>
+          <td
+            style="vertical-align: middle; padding-left: 8px; text-align: left"
+            mat-cell
+            *matCellDef="let element"
+          >
+            <span class="para-bold">{{ element.quertly1 }}</span>
+            <span class="red-heading ml-[3px]">{{
+              element.yearly_currency
+            }}</span>
+            <span class="red-heading ml-[3px]">WOW Coins</span>
+          </td>
+        </ng-container>
+
+        <!-- WOW Rental Paid Quarterly Column -->
+        <ng-container matColumnDef="quarterly1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [attr.colspan]="1"
+            style="
+              min-width: 120px;
+              word-wrap: break-word;
+              white-space: nowrap;
+              padding-left: 8px;
+              padding-right: 8px;
+              vertical-align: middle;
+              text-align: center;
+            "
+          >
+            Paid <br />
+            Half Yearly
+          </th>
+          <td
+            style="vertical-align: middle; padding-left: 8px; text-align: left"
+            mat-cell
+            *matCellDef="let element"
+          >
+            <span class="para-bold">{{ element.half1 }}</span>
+            <span class="red-heading ml-[3px]">{{
+              element.yearly_currency
+            }}</span>
+            <span class="red-heading ml-[3px]">WOW Coins</span>
+          </td>
+        </ng-container>
+
+        <!-- WOW Rental Paid Yearly Column -->
+        <ng-container matColumnDef="yearly1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [attr.colspan]="1"
+            style="
+              min-width: 120px;
+              word-wrap: break-word;
+              white-space: nowrap;
+              padding-left: 8px;
+              padding-right: 8px;
+              vertical-align: middle;
+              text-align: center;
+            "
+          >
+            Paid <br />
+            Annually
+          </th>
+          <td
+            style="vertical-align: middle; padding-left: 8px; text-align: left"
+            class="primary-heading"
+            mat-cell
+            *matCellDef="let element"
+          >
+            <span class="para-bold">{{ element.yearly1 }}</span>
+            <span class="red-heading ml-[3px]">{{
+              element.yearly_currency
+            }}</span>
+            <span class="red-heading ml-[3px]">WOW Coins</span>
+          </td>
+        </ng-container>
+
+        <!-- Header row first group -->
+
+        <ng-container matColumnDef="header-row-first-group">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [attr.colspan]="1"
+            style="
+              max-width: 150px;
+              word-wrap: break-word;
+              white-space: nowrap;
+              padding-left: 10px;
+              padding-right: 10px;
+            "
+          ></th>
+        </ng-container>
+
+        <!-- Header row second group -->
+        <ng-container matColumnDef="header-row-second-group">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [attr.colspan]="4"
+            style="
+              max-width: 150px;
+              word-wrap: break-word;
+              white-space: nowrap;
+              padding-left: 10px;
+              padding-right: 10px;
+              text-align: center;
+            "
+          >
+            WOW Rental
+          </th>
+        </ng-container>
+
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'header-row-first-group',
+            'header-row-second-group'
+          ]"
+        ></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+          style="text-align: center"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="selection.toggle(row); onRowClicked(row)"
+          (mouseover)="row.hovered = true"
+          (mouseout)="row.hovered = false"
+        ></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="12">
+            Data not Found.
+            <!-- "{{ input.value }}" -->
+          </td>
+        </tr>
+      </table>
+    </div>
+    <mat-paginator
+      class="component--mat-pagination__size"
+      #paginator
+      #paginatorElement
+      [length]="dataSource.data.length"
+      [pageIndex]="0"
+      [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="5"
+      [allValue]="dataSource.data.length"
+      appAddAllToPaginator
+    >
+    </mat-paginator>
+    <span class="red-heading ml-[12px]"> * </span
+      ><span class="para"> Please select All in order to use filter </span>
+      <div class="flex bg-white-black" id="export_btn">
+        <div class="custom-mat-floating-label">
+          <mat-form-field
+            appearance="outline"
+            class="component--mat-form-field__custom-input pl-2"
+          >
+            <input
+              placeholder="Filter"
+              [disabled]="
+                dataSource.data.length === 0 ||
+                !(pageSize !== 5 && pageSize !== 10 && pageSize !== 20)
+              "
+              matInput
+              (keyup)="applyFilter($event)"
+              #input
+            />
+          </mat-form-field>
+        </div>
+        <div class="w-full flex justify-end">
+          <span class="p-5 export-btn" [matMenuTriggerFor]="menu"
+            >Export</span
+          >
+        </div>
+      </div>
+
+  </div>
+</div>
+<!-- Mat Menu -->
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="downloadAsPDF()">
+    <mat-icon>picture_as_pdf</mat-icon>
+    <span>Print / Export PDF</span>
+  </button>
+  <button mat-menu-item (click)="exportReport('sample.xlsx')">
+    <mat-icon>grid_on</mat-icon>
+    <span>Export SpreadSheet</span>
+  </button>
+  <button mat-menu-item (click)="exportReport('sample.csv')">
+    <mat-icon>grid_on</mat-icon>
+    <span>Export csv File</span>
+  </button>
+  <button mat-menu-item (click)="exportReport('sample.json')">
+    <mat-icon>grid_on</mat-icon>
+    <span>Export json</span>
+  </button>
+</mat-menu>
+
+<!-- <div *ngIf="div"
+  class="text-[14px] mt-4 text-justify">
+  <p>
+    <span class="primary-heading">{{ json.sentence1.prefix }}</span> {{ json.sentence1.content }}
+  </p>
+  <p>
+    <span class="primary-heading">{{ json.sentence2.prefix  }}</span> {{ json.sentence2.content }}
+  </p>
+  <p>
+    <span class="primary-heading">{{ json.sentence3.prefix  }}</span> {{ json.sentence3.content }}
+  </p>
+  <p>
+    <span class="primary-heading">{{ json.sentence4.prefix  }}</span> {{ json.sentence4.content }}
+  </p>
+</div> -->

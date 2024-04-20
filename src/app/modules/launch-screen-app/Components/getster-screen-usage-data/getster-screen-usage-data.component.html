@@ -1,0 +1,196 @@
+<ng-container>
+  <div>
+    <!--simple text-->
+    <div class="text-justify">
+      <span class="para-bold"
+        >List of GETster Screens registered in your Educational
+        Institution:</span
+      >
+      <span class="red-heading ml-[5px]">{{
+        registered_educational_institution_name
+      }}</span>
+    </div>
+    <!--Table-->
+    <div>
+      <div class="mat-elevation-z8 mt-3 table-responsive w-fit">
+        <div id="screenRegisterTable">
+          <table
+            id="excel_table"
+            matSort
+            mat-table
+            #table
+            [dataSource]="dataSource"
+            style="margin-left: auto; margin-right: auto"
+            class="component--mat-table__custom-table checklist-table table-bordered table-sm block"
+          >
+            <!-- Usege Status Column -->
+            <ng-container matColumnDef="usagestatus" style="">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 160px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+                GETster <br />
+                Screen Id
+              </th>
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <!-- <mat-radio-group [(ngModel)]="screenradio"> -->
+                <mat-radio-button
+                  [value]="element.screenid"
+                  (click)="
+                    getusage(
+                      element.getster_screen_id,
+                      element.screen_size_in_inch
+                    )
+                  "
+                  ><span class="para-bold">{{
+                    element.getster_screen_id
+                  }}</span>
+                </mat-radio-button>
+                <!-- </mat-radio-group> -->
+              </td>
+            </ng-container>
+
+            <!-- Rental Column -->
+            <ng-container matColumnDef="rentaldate" style="">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                style="
+                  min-width: 162px;
+                  word-wrap: break-word;
+                  white-space: nowrap;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  vertical-align: middle;
+                  text-align: center;
+                "
+              >
+                Screen Size <br />
+                (inch)
+              </th>
+              <td
+                style="
+                  vertical-align: middle;
+                  padding-left: 8px;
+                  text-align: left;
+                "
+                mat-cell
+                *matCellDef="let element"
+              >
+                <span class="para-bold">{{ element.screen_size_in_inch }}</span>
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+              style="text-align: center"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="selection.toggle(row); onRowClicked(row)"
+              (mouseover)="row.hovered = true"
+              (mouseout)="row.hovered = false"
+            ></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="2">
+                Data not Found.
+                <!-- "{{ input.value }}" -->
+              </td>
+            </tr>
+          </table>
+        </div>
+        <mat-paginator
+          class="component--mat-pagination__size"
+          #paginator
+          #paginatorElement
+          [length]="dataSource.data.length"
+          [pageIndex]="0"
+          [pageSizeOptions]="[5, 10, 20]"
+          [pageSize]="5"
+          [allValue]="dataSource.data.length"
+          appAddAllToPaginator
+          (page)="pageChanged($event)"
+        >
+        </mat-paginator>
+
+        <span class="red-heading ml-[12px]"> * </span
+        ><span class="para"> Please select All in order to use filter </span>
+        <div class="flex bg-white-black" id="export_btn">
+          <div class="custom-mat-floating-label">
+            <mat-form-field
+              appearance="outline"
+              class="component--mat-form-field__custom-input pl-2"
+            >
+              <input
+                placeholder="Filter"
+                [disabled]="
+                  dataSource.data.length === 0 ||
+                  !(pageSize !== 5 && pageSize !== 10 && pageSize !== 20)
+                "
+                matInput
+                (keyup)="applyFilter($event)"
+                #input
+              />
+            </mat-form-field>
+          </div>
+          <div class="w-full flex justify-end">
+            <span class="p-5 export-btn" [matMenuTriggerFor]="menu"
+              >Export</span
+            >
+          </div>
+        </div>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="downloadAsPDF()">
+            <mat-icon>picture_as_pdf</mat-icon>
+            <span>Print / Export PDF</span>
+          </button>
+          <button mat-menu-item (click)="exportReport('sample.xlsx')">
+            <mat-icon>grid_on</mat-icon>
+            <span>Export SpreadSheet</span>
+          </button>
+          <button mat-menu-item (click)="exportReport('sample.csv')">
+            <mat-icon>grid_on</mat-icon>
+            <span>Export csv File</span>
+          </button>
+          <button mat-menu-item (click)="exportReport('sample.json')">
+            <mat-icon>grid_on</mat-icon>
+            <span>Export json</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <!--Another table-->
+    <div class="mt-[20px]">
+      <div>
+        <span class="para-bold">Usage Data of GETster Screen ID: </span>
+        <span class="ml-2" style="color: #ff0404">{{ screen_id_new }}</span>
+      </div>
+      <div>
+        <app-usage-data-table></app-usage-data-table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container> </ng-container>

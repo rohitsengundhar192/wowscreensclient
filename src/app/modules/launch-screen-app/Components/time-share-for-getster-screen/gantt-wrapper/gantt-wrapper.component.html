@@ -1,0 +1,30 @@
+<div class="task-gantt-container">
+  <div class="task-gantt-wrapper" [ngClass]="{ mobile: this.isMobile }">
+    <div class="task-list" #tasktree [hidden]="!isChecked">
+      <div class="">
+        <span class="normal-heading">GETster Screen ID / Size (Inch)</span>
+      </div>
+      <mat-tree
+        id="task-tree"
+        [dataSource]="dataSource"
+        [treeControl]="treeControl"
+        [ngStyle]="{ maxHeight: maxHeight + 'px' }"
+      >
+        <mat-tree-node
+          *matTreeNodeDef="let node; when: hasChild"
+          matTreeNodePadding
+          [ngClass]="{ hasChild: hasChild }"
+        >
+          <span class="ml-[20px]">
+            {{ node.name | json }} / {{ node.screen_size_in_inch | json }}
+          </span>
+        </mat-tree-node>
+      </mat-tree>
+
+      <p *ngIf="!tasks.length" class="no-record">No Tasks Found</p>
+    </div>
+
+    <div class="gantt-area" #ganttcontainer></div>
+
+  </div>
+</div>

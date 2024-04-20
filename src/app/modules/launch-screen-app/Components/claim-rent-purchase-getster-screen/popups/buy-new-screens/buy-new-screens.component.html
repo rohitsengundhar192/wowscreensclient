@@ -1,0 +1,59 @@
+<div>
+  <mat-toolbar class="component--dialog-box__custom-toolbar">
+    <span class="font-small-in-size">Rent / Purchase New Screen</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="flex items-center justify-center">
+      <mat-icon (click)="onNoClick()">close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<div class="p-2">
+  <!--simple text-->
+  <div class="text-justify">
+    <span class="primary-heading">
+      In case you are interested in Renting / Purchasing an additional GETster
+      Screen. Please contact your GETster Coordinator
+    </span>
+  </div>
+
+
+  <div class="w-full gt-xs:flex  gt-xs:items-center gt-xs: gap-2">
+
+
+  <!--user profile-->
+
+  <mat-card class="mt-[5px]">
+    <mat-card-content>
+      <div class="lt-xs: mt-[10px]">
+        <div>
+          <span class="para-bold">Name: </span>
+          <span class="primary-heading">{{first_name}} {{last_name}}</span>
+        </div>
+        <div>
+          <span class="para-bold">Mobile Number: </span>
+          <span class="primary-heading">+{{mobile_extension}} {{mobile}}</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+
+<!--below simple text-->
+<div class="text-justify mt-[15px]">
+  <span class="para-bold">In case there is an insufficient response from your GETster Coordinator
+    Please contact your GETster Manager:    </span>
+
+    <span class="primary-heading">+{{another_mobile_extension}} {{another_mobile}}</span>
+
+</div>
+
+<!--ok button-->
+<div class="w-full flex justify-center mt-[10px]" >
+  <button class="primary-button" mat-raised-button (click)="onNoClick()">OK</button>
+</div>
+
+
+</div>

@@ -1,0 +1,116 @@
+<div>
+  <mat-toolbar class="component--dialog-box__custom-toolbar">
+    <span class="font-small-in-size">Extent Rental</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="flex items-center justify-center">
+      <mat-icon (click)="onNoClick()">close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<div class="p-2">
+  <!--Simple text-->
+  <div>
+    <div class="text-justify">
+      <span class="normal-heading ">Step 2:</span>
+      <span class="para-bold ml-[5px]"
+        >Please select from the following Rental Options for GETster Screen
+        ID:</span
+      ><span class="primary-heading ml-[5px]">{{ screen_id }}</span>
+    </div>
+  </div>
+
+  <!--content-->
+  <div>
+    <!--first-->
+
+    <!--right-->
+    <div class="flex items-center gap-2">
+      <div>
+        <mat-radio-button
+          (click)="enableButton(2, wowtwomonths, 0)"
+        ></mat-radio-button>
+      </div>
+
+      <div>
+        <div>
+          <span class="primary-heading">WOW Rental Prepaid for 2 Months</span>
+        </div>
+        <div>
+          <span class="para-bold">{{ wowtwomonths }}</span>
+          <span class="red-heading ml-[5px]">WOW Coins</span>
+        </div>
+      </div>
+    </div>
+
+    <!--second-->
+
+    <!--right-->
+    <div class="flex items-center gap-2">
+      <div>
+        <mat-radio-button
+          (click)="enableButton(6, wowquater, 0)"
+        ></mat-radio-button>
+      </div>
+
+      <div>
+        <div>
+          <span class="primary-heading"
+            >WOW Rental Prepaid HalfYerly (6 Months)</span
+          >
+        </div>
+        <div>
+          <span class="para-bold">{{ wowquater }}</span>
+          <span class="red-heading ml-[5px]">WOW Coins</span>
+        </div>
+      </div>
+    </div>
+
+    <!--Third-->
+
+    <!--right-->
+    <div class="flex items-center gap-2">
+      <div>
+        <mat-radio-button
+          (click)="enableButton(12, wowyearly, 0)"
+        ></mat-radio-button>
+      </div>
+
+      <div>
+        <div>
+          <span class="primary-heading"
+            >WOW Rental Prepaid Yearly (12 months)</span
+          >
+        </div>
+        <div>
+          <span class="para-bold">{{ wowyearly }}</span>
+          <span class="red-heading ml-[5px]">WOW Coins</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!---button-->
+  <div class="w-full flex justify-center mt-[10px]" *ngIf="showbtn">
+    <button
+      class="primary-button"
+      mat-raised-button
+      [disabled]="isButtonDisabled"
+      (click)="postpaywowrent()"
+    >
+      Proceed to Payment
+    </button>
+  </div>
+
+  <!-- <div class="w-full flex justify-center mt-[10px]" *ngIf="showbtn">
+    <button class="primary-button" mat-raised-button [disabled]="isButtonDisabled" (click)="openwow()">open wow</button>
+  </div> -->
+
+  <!--last text-->
+  <div class="text-justify">
+    <span class="red-heading"
+      >Please note: WOW Rental can be paid only through the earnings from the
+      collections in WOW Program via your WOW Wallet.
+    </span>
+  </div>
+</div>

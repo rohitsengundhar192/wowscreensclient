@@ -1,0 +1,58 @@
+.task-list {
+    float: left;
+    width: 215px;
+    padding-top: 23px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: white;
+}
+
+.gantt-area {
+    overflow: hidden;
+    min-width: 350px;
+}
+
+.view-dd {
+    height: 56px;
+}
+
+.hasChild {
+    background-color: #f5f5f5;
+}
+
+.no-record {
+    text-align: center;
+    padding: 20px 0px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+mat-tree {
+    display: inline-block !important;
+    min-width: 100%;
+    overflow: hidden;
+}
+
+mat-tree-node {
+    white-space: nowrap;
+}
+
+.mobile {
+    .task-list {
+        position: absolute;
+        left: 0;
+        top: 76px;
+        z-index: 1;
+        width: 100%;
+
+        mat-tree {
+            overflow: auto;
+        }
+    }
+}
+
+
+.main-content {
+    /* Subtract 80px from 100vh */
+    height: calc(100vh - 80px);
+  }
